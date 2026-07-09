@@ -7,9 +7,9 @@ test('visible logo', async ({ page }) => {
 
 test('verify login with valid credentials', async ({ page }) => {
   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-  await page.getByRole('textbox', { name: 'Username' }).fill('Admin');
+  await page.getByLabel("Password").fill(process.env.APP_USERNAME);
   await page.getByRole('textbox', { name: 'Username' }).press('Tab');
-  await page.getByRole('textbox', { name: 'Password' }).fill('admin123');
+  await page.getByRole('textbox', { name: 'Password' }).fill('process.env.APP_PASSOWRD');
   await page.getByRole('textbox', { name: 'Password' }).press('Tab');
   await page.getByRole('button', { name: 'Login' }).press('Enter');
   await page.getByRole('button', { name: 'Login' }).click();
@@ -87,9 +87,9 @@ test('verify timesheet with invalid emp name', async ({ page }) => {
 
 test('verify dashboard', async ({ page }) => {
   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-  await page.getByRole('textbox', { name: 'Username' }).fill('Admin');
+  await page.getByRole('textbox', { name: 'Username' }).fill(process.env.APP_USERNAME);
   await page.getByRole('textbox', { name: 'Password' }).click();
-  await page.getByRole('textbox', { name: 'Password' }).fill('admin123');
+  await page.getByRole('textbox', { name: 'Password' }).fill(process.env.APP_PASSWORD);
   await page.getByRole('button', { name: 'Login' }).click();
   await page.getByRole('link', { name: 'Dashboard' }).click();
   await page.locator('div').filter({ hasText: /^Time at Work$/ }).first().click();
