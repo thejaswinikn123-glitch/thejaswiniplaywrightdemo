@@ -131,3 +131,4 @@ test('test', async ({ page }) => {
   await page.getByTitle('Help').click();
   const page1 = await page1Promise;
 });
+
