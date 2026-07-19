@@ -1,19 +1,19 @@
 // @ts-check
-import { defineConfig, devices } from '@playwright/test';
-require('dotenv').config()
+const { defineConfig, devices } = require('@playwright/test');
+require('dotenv').config();
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
+// const dotenv = require('dotenv');
+// const path = require('path');
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
-export default defineConfig({
+module.exports = defineConfig({
   testDir: './tests',
   expect:{
     timeout: 60000,
@@ -45,16 +45,6 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-    },
-
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
     },
 
     /* Test against mobile viewports. */

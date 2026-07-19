@@ -7,12 +7,10 @@ test('visible logo', async ({ page }) => {
 
 test('verify login with valid credentials', async ({ page }) => {
   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-  await page.getByLabel("Password").fill(process.env.APP_USERNAME);
-  await page.getByRole('textbox', { name: 'Username' }).press('Tab');
-  await page.getByRole('textbox', { name: 'Password' }).fill('process.env.APP_PASSOWRD');
-  await page.getByRole('textbox', { name: 'Password' }).press('Tab');
-  await page.getByRole('button', { name: 'Login' }).press('Enter');
-  await page.getByRole('button', { name: 'Login' }).click();
+  await page.locator('input[name="username"]').fill('Admin');
+  await page.locator('input[name="password"]').fill('admin123');
+  await page.locator('button[type="submit"]').click();
+  await expect(page).toHaveURL(/\/dashboard\/index$/);
 });
 test('verify login with invalid credentials', async ({ page }) => {
   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
@@ -56,8 +54,9 @@ test('verify delete job title', async ({ page }) => {
   await page.getByRole('textbox').nth(1).fill('aerwerqFDSGFED3RTWETR4WERSADFSDR');
   await page.getByRole('textbox').nth(1).press('CapsLock');
   await page.getByRole('button', { name: 'Save' }).click();
-  await page.getByRole('button').nth(4).click();
-  await page.getByRole('button', { name: ' Yes, Delete' }).click();
+  await expect(page.locator('div').filter({ hasText: 'aerwerqFDSGFED3RTWETR4WERSADFSDR' }).first()).toBeVisible();
+  await page.locator('.oxd-table-row').filter({ hasText: 'aerwerqFDSGFED3RTWETR4WERSADFSDR' }).locator('.oxd-table-cell-actions button').first().click();
+  await page.getByRole('button', { name: /Yes, Delete/ }).click();
 });
 
 test('verify timesheet with valid emp name ', async ({ page }) => {
@@ -67,9 +66,9 @@ test('verify timesheet with valid emp name ', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Password' }).fill('admin123');
   await page.getByRole('button', { name: 'Login' }).click();
   await page.getByRole('link', { name: 'Time' }).click();
-  await page.getByRole('textbox', { name: 'Type for hints...' }).click();
-  await page.getByRole('textbox', { name: 'Type for hints...' }).fill('tester');
-  await page.getByRole('option', { name: 'John Tester' }).click();
+  await page.locator('input[placeholder="Type for hints..."]').click();
+  await page.locator('input[placeholder="Type for hints..."]').fill('tester');
+  await page.locator('.oxd-autocomplete-option').first().click();
   await page.locator('form').getByRole('button', { name: 'View' }).click();
 });
 test('verify timesheet with invalid emp name', async ({ page }) => {
@@ -80,17 +79,16 @@ test('verify timesheet with invalid emp name', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Password' }).fill('admin123');
   await page.getByRole('button', { name: 'Login' }).click();
   await page.getByRole('link', { name: 'Time' }).click();
-  await page.getByRole('textbox', { name: 'Type for hints...' }).click();
-  await page.getByRole('textbox', { name: 'Type for hints...' }).fill('oijutwru9t83w4toeirjtgpwerotkpwro');
+  await page.locator('input[placeholder="Type for hints..."]').click();
+  await page.locator('input[placeholder="Type for hints..."]').fill('oijutwru9t83w4toeirjtgpwerotkpwro');
   await page.locator('form').getByRole('button', { name: 'View' }).click();
 });
 
 test('verify dashboard', async ({ page }) => {
   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-  await page.getByRole('textbox', { name: 'Username' }).fill(process.env.APP_USERNAME);
-  await page.getByRole('textbox', { name: 'Password' }).click();
-  await page.getByRole('textbox', { name: 'Password' }).fill(process.env.APP_PASSWORD);
-  await page.getByRole('button', { name: 'Login' }).click();
+  await page.locator('input[name="username"]').fill('Admin');
+  await page.locator('input[name="password"]').fill('admin123');
+  await page.locator('button[type="submit"]').click();
   await page.getByRole('link', { name: 'Dashboard' }).click();
   await page.locator('div').filter({ hasText: /^Time at Work$/ }).first().click();
   await page.getByText('My Actions').click();
