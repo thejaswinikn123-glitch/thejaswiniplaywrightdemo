@@ -10,9 +10,9 @@ test('test box', async ({ page }) => {
 
     await page.locator('input[placeholder="name@example.com"]').fill(data.emailaddress)
   
-    await page.locator('#CurrentAddress').fill(data.currentaddress)
+    await page.locator('#currentAddress').fill(data.currentAddress)
 
-    await page.locator('#permanentAddress').fill(data.parmanentadress)
+    await page.locator('#permanentAddress').fill(data.permanentAddress)
 
     await page.locator('#submit').click()
 
